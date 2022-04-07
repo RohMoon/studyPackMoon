@@ -50,5 +50,8 @@ public class Money implements Expression {
     }
 
 
-
+    @Override
+    public Money reduce(Bank bank, String to) {
+        return null;
+    }
 }

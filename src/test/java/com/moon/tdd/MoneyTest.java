@@ -1,9 +1,10 @@
-package tdd;
+package com.moon.tdd;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MoneyTest {
 
@@ -79,13 +80,13 @@ class MoneyTest {
         assertEquals(Money.dollar(1),result);
     }
 
-    @Test
-    public void testReduceMoneyDiffenrentCurrency(){
-        Bank bank = new Bank();
-        bank.addRate("CHF","USD",2);
-        Money result = bank.reduce(Money.franc(2),"USD");
-        assertEquals(Money.dollar(1),result);
-
-    }
+//    @Test
+//    public void testReduceMoneyDiffenrentCurrency(){
+//        Bank bank = new Bank();
+//        bank.addRate("CHF","USD",2);
+//        Money result = bank.reduce(Money.franc(2),"USD");
+//        assertEquals(Money.dollar(1),result);
+//
+//    }
 
 }
