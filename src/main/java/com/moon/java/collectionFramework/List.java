@@ -10,6 +10,8 @@ public interface List<E> {
     * */
     boolean add(E value);
 
+    void addLast(E value);
+
     /*
     * 리스트에 요소를 특정위치에 추가한다.
     * 특정 위치 및 이후의 요소들은 한칸씩 뒤로 밀린다.

@@ -1,6 +1,6 @@
 package com.moon.java.collectionFramework;
 
-public class mainTask {
+public class MainTask {
     public static void main(String[] args) {
         System.out.println("=====짧은머리 개발자=====");
         ArrayList<Integer> arr = new ArrayList<Integer>();
