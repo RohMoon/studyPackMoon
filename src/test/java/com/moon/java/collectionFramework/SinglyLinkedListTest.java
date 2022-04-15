@@ -1,5 +1,6 @@
 package com.moon.java.collectionFramework;
 
+import com.moon.java.collectionFramework.singleLinkedList.SinglyLinkedList;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,7 +17,7 @@ class SinglyLinkedListTest {
         singlyLinkedList.add(2);
         singlyLinkedList.add(12);
 
-        System.out.println("singlyLinkedList In here");
+        System.out.println("SinglyLinkedList.md In here");
 
         for (int i = 0; i < singlyLinkedList.size(); i++) {
             System.out.println("in -- > "+singlyLinkedList.get(i));
@@ -66,11 +67,11 @@ class SinglyLinkedListTest {
     @Test
     public void testAfterCloneMethod() throws CloneNotSupportedException {
 
-        SinglyLinkedList<Integer> original = new SinglyLinkedList<>();
+        SinglyLinkedList.md<Integer> original = new SinglyLinkedList.md<>();
         original.add(10); // Original에 10 추가
 
-        SinglyLinkedList<Integer> copy = original;
-        SinglyLinkedList<Integer> clone = (SinglyLinkedList<Integer>) original.clone();
+        SinglyLinkedList.md<Integer> copy = original;
+        SinglyLinkedList.md<Integer> clone = (SinglyLinkedList.md<Integer>) original.clone();
         
         copy.add(20); // copy에 20 추가
         copy.add(30); // clone에 30추가

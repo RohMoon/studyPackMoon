@@ -1,0 +1,29 @@
+# [Java] 
+## Doubly LinkedList (이중 연결리스트)
+
+- 실제 자바에서 제공하는 util 패키지의 LinkedList는 이번에 구현할 Doubly LinkedList랑 같은 형식으로 되어 있다.  
+단일연결리스트와의 차이라면 단일 연결리스트는 노드에 데이터와 다음 노드를 가리키는 노드 변수만을 갖고 있었다면  
+이중 연결리스트는 하나 더 추가되어 ___'이전노드'를 가리키는 변수___ 가 추가된다.  
+
+![img_10.png](img_10.png)  
+위 구조에서 사용자가 저장할 데이터는 data 변수에 담기고, reference 데이터( 참조 데이터)는 연결할 노드를 가리키는 데이터가 담긴다.  
+구현ㄷ할 Doubly LinkedList는 앞 뒤로 노드를 연결 하므로 전체적인 구조로 보자면 이렇다.
+
+![img_12.png](img_12.png)
+ 위 그림을 보면 각각의 레퍼런스 변수는 다음 노드와 이전 노드를 가리키고 있다.  
+이렇게 __양바향으로 연결된 리스트__ 를 LinkedList중에서도 __Doubly LinkedList__ 라고 하는 것이다.
+  
+- 이러한 양방향으로 연결이 어떤점이 좋은가?
+  - Singly LinedList에 비해서 검색(색인)능력이 좋아진다.  
+  - 단방향으로 연결된 Singly LinkedList 의 경우 반드시 head부터 시작하여 탐색하였다.  
+  - 만약 10개의 노드가 있고, 9번째 노드를 탐색하려 한다면 head부터 탐색했어야 했다.  
+  하지만, Doubly LinkedList 의 경우는 Previous Node 변수,   
+  즉 이전 노드를 가리키는 변수를 갖고 있기 때문에 tail부터 탐색할 수 있어 찾으려는 노드가 tail에 가깝다면 tail부터,  
+  head에서 가깝다면 head부터 탐색하면 되기 때문에 좀 더 효율적인 탐색이 가능하다.
+  - 전체적인 구성은 Singly LinkedList와 같기도 하다.
+- addFirst 
+  ![img.png](img.png)
+- addLast 
+- ![img_1.png](img_1.png)
+- add(int index, E value)
+- ![img_2.png](img_2.png)

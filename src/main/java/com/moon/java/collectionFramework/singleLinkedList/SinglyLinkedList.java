@@ -1,7 +1,7 @@
-package com.moon.java.collectionFramework;
+package com.moon.java.collectionFramework.singleLinkedList;
 
-import java.util.Comparator;
-import java.util.ListIterator;
+import com.moon.java.collectionFramework.List;
+
 import java.util.NoSuchElementException;
 
 /* https://st-lab.tistory.com/167?category=856997 */
@@ -470,7 +470,7 @@ public class SinglyLinkedList<E> implements List<E> {
     public Object clone() throws CloneNotSupportedException {
 
         @SuppressWarnings("unchecked")
-        SinglyLinkedList<? super E> clone = (SinglyLinkedList<? super E>) super.clone();
+        SinglyLinkedList.md<? super E> clone = (SinglyLinkedList.md<? super E>) super.clone();
 
         clone.head = null;
         clone.tail = null;
@@ -488,7 +488,7 @@ public class SinglyLinkedList<E> implements List<E> {
      * 그렇기 때문에 새로 만들어진 객체의 내부에 데이터를 새로 설정해주어야 한다.
      * 즉, 각 노드를 일단 끊고, 처음부터 끝까지 현재 리스트의 데이터를 clone 리스트에 넣어주어야 한다.
      *
-     * 설명을 덧붙이자면, super.clone() 자체가 생성자 비슷한 역할이고 shallow copy를 통해 사실상 new SinglyLinkedList()를 호출하는
+     * 설명을 덧붙이자면, super.clone() 자체가 생성자 비슷한 역할이고 shallow copy를 통해 사실상 new SinglyLinkedList.md()를 호출하는
      * 격이라 제대로 완벽하게 복제하려면 clone한 리스트의 array 또한 새로 생성해서 해당 배열에 copy를 해주어야 한다.
 
      * sort() 메서드

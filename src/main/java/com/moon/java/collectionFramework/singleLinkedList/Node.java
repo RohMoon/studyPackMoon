@@ -1,4 +1,4 @@
-package com.moon.java.collectionFramework;
+package com.moon.java.collectionFramework.singleLinkedList;
 
 public class Node<E> {
 
