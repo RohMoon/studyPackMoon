@@ -1,4 +1,6 @@
-package com.moon.java.collectionFramework;
+package com.moon.java.collectionFramework.array;
+
+import com.moon.java.collectionFramework.arrayList.ArrayList;
 
 public class MainTask {
     public static void main(String[] args) {

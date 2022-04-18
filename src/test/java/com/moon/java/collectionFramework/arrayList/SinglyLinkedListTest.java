@@ -1,4 +1,4 @@
-package com.moon.java.collectionFramework;
+package com.moon.java.collectionFramework.arrayList;
 
 import com.moon.java.collectionFramework.singleLinkedList.SinglyLinkedList;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.moon.java.collectionFramework;
+package com.moon.java.collectionFramework.arrayList;
 
 public class ArrayList3<T> {
     int size = 0;

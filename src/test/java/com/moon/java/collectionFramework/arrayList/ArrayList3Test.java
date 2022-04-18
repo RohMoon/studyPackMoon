@@ -1,5 +1,6 @@
-package com.moon.java.collectionFramework;
+package com.moon.java.collectionFramework.arrayList;
 
+import com.moon.java.collectionFramework.arrayList.ArrayList3;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 

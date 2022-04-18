@@ -1,6 +1,6 @@
 package com.moon.java.collectionFramework.singleLinkedList;
 
-import com.moon.java.collectionFramework.List;
+import com.moon.java.collectionFramework.arrayList.List;
 
 import java.util.NoSuchElementException;
 

@@ -1,6 +1,6 @@
 package com.moon.java.collectionFramework.doubleLinkedList;
 
-import com.moon.java.collectionFramework.List;
+import com.moon.java.collectionFramework.arrayList.List;
 
 import java.util.NoSuchElementException;
 
