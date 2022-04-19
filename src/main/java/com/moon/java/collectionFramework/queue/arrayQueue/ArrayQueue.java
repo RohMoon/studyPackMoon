@@ -1,4 +1,6 @@
-package com.moon.java.collectionFramework.queue;
+package com.moon.java.collectionFramework.queue.arrayQueue;
+
+import com.moon.java.collectionFramework.queue.QueueInterface;
 
 import java.util.NoSuchElementException;
 

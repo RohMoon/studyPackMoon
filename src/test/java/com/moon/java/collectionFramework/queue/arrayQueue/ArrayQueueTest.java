@@ -1,5 +1,6 @@
-package com.moon.java.collectionFramework.queue;
+package com.moon.java.collectionFramework.queue.arrayQueue;
 
+import com.moon.java.collectionFramework.queue.arrayQueue.ArrayQueue;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
