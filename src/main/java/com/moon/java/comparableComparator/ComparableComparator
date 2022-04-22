@@ -1,0 +1,201 @@
+## [JAVA] Comparable과 Comparator 의 이해
+
+### Comparable / Comparator
+
+- Comparable과 Comparator와 '비교'의 연관성 및 필요성에 대해 알아본 뒤, Comparable과 Comparator를 각각 알아보자.
+- Comparator 익명 객체에 대해서 알아보고 최종적으로 Comparable, Comparator와 '정렬'의 관계에 대해서이다.
+- <b style="color:orange"> Comparable과 Comparator는 모두 인터페이스</b>이다. <br>Comparable 혹은 Comparator를 사용하고자 한다면 인터페이스 내에 선언된 메서드를 반드시 `구현`해야 한다.</br></br>
+- [Comparable Official API](docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html#method.summary)
+    - Comparable 인터페이스에는 compareTo( T o ) 메서드 하나 선언되어 있다.<br>
+      Comparable을 사용하려한다면 compareTo 메서드를 재정의(Override/ 구현)해주어야한다.<br><br>
+- [Comparator](docs.oracle.com/javase/8/docs/api/java/util/Comparator.html#method.summary)
+    - Comparator의 경우 선언되어 있는 메서드가 많지만 , 실질적을 구현해야하는 것은 compare(T o1, T o2)다.
+  > 인터페이스 내부에 선언된 메서드를 '반드시 구현' 해야한다고 말햇는데, 왜 compare메서드만 구현 하는가?  
+  > <br>
+  > 원래 interface는 함수의 껍데기만 있는 클래스라고 보면 된다.
+  > 예로 자동차를 설계한다고 가정할 때, "자동차 "라는 것 자체는 추상적인 개념이다.
+  > <br>
+  > 대게 자동차라고 하면 바퀴4개, 핸들과 기어가 있는 동력 물체라는 개념이 존재한다 . 이러한 추상적 개념을 interface라고 보면 된다.
+  > 이러한 개념을 구체화, 즉 구현을 하여 핸들은 어떤 모양으로 할것인가 바퀴는 어느 크기, 어느 위치에 둘 것인지 구체적으로 만들어 k7,람보르기니 350gt 등 하나의 제품이 만들어진다.
+  > <br><br>
+  > 이것을 class라고 보면 된다.
+  > 즉, interface에 선언된 메서드 (바퀴,핸들,시어,동력 장치)들이 있고, 이 인터페이스를 구현하는 클래스는 인터페이스에 선언된 메서드(바퀴,핸들,기어,동력장치)를 반드시 구체화 하도록 강제하고 있다는 것이다.  
+  > 그리고 이를 오버라이드(Override) 재정의라고 부른다.<br><br>
+  > 그래서 Interface 파일의 경우 메서드(함ㅅ)를 선언만 해놓을 뿐 함수의 내용은 구체화 하지 않는다. 이를 흔히 추상메서드라고 한다.<br><br>
+  > ```java
+   > interface Car {
+   >   void setHandle();
+   >   void setWheel();
+   >   int  gear();
+   > // ... /// 
+   > } 
+   > ```
+  > 이런식이다.
+  > Car 인터페이스를 구현하고자 한다면 다음과 같다.
+  > ```java
+   > class GT350 implements Car {
+   > //...//
+   > @Override
+   > void handleint  (int size) {
+   >  handleSize = size;
+   > }
+   > 
+   > @Override
+   > void setWheel() {
+   > wheelCount = 4;
+   > }
+   > @Override
+   > int gear(){
+   >    return nowGear;}
+   > // ...//
+   > }
+   >```
+   > 이런식으로 '반드시 구현' 해주어야 한다.
+   > 그러나 Java8부터는 Interface에서도 일반 메서드(함수)를 구현할 수 있도록 변경되었다. 
+   > 대부분이 default로 선언된 메서드나, static 으로 선언된 메서드인 것을 볼 수 있다. 
+  > 그리고 default나 static으로 선언된 메서드들을 보면 함수를 구현하고 있다.
+  > ![img.png](img.png)
+  > 그림에서 처럼  기존 구현된 함수를 반환하는등, 함수의 내용이 { .. } 블럭 안에 구현이 되어 있는것을 볼 수 있다.<br>
+  > 이 말은, default나 static으로 선언된 메서드가 아니면 이는 추상메서드라는 의미로 반드시 재정의를 해주어야 한다. 
+  > 여담으로 default 와 static의 차이라면 default로 선언된 메서드는 Override할 수 있고, static은 재정의를 할 수 없다는 차이이다.
+  > (참고로 bool equals(Object obj) 메서드는 default나 static이 안붙어있음에도 구현이 강제되지 않는 이유는 모든 객체의 최상위 타입(객체)인 Object 클래스에서 정의되어 있기 때문이다.)
+- Comparable, Comparator 이 두 인터페이스는 무엇을 하는지부터 생각해보자.
+  - 보통 많은 사람들의 경우 객체를 정렬을 하기 위해 쓴다고 하지만, 정확히 말하자면 그건 용도에 불과하다.
+  - <b style="color:Orange">"객체를 비교할 수 있도록 만든다"가 핵심이다."</b><br>
+  왜 객체를 비교할 수 있도록 한다는 걸까? 생각해보면 우리는 primitive 타입의 실수 변수 (byte, int, double 등등...)의 경우 부등호를 갖고 쉽게 두 변수를 비교할 수 있었다. 
+    - ```java
+         public class Test{
+            int a = 1;
+            int b = 2;
+            if(a > b){
+                System.out.print("a가 b보다 크다.");
+            }
+            else if (a == b ){
+            System.out.println("a와 v는 같습니다.");
+       }    else {
+                System.out.println("b가 a보다 크다.");
+       }        
+       
+       }        
+       ``` 
+       이런식으로 primitive type은 자바 자체에서 제공되기에 별다른 처리 없이 비교가 가능하다.<bR>
+     즉, 기본 자료형이기 때문에 부등호로 쉽게 비교가 가능하다.
+    - 하지만, 새로운 클래스 객체를 만들어 비교하고자 한다면 어떻게 해야할까 ? 예로 학생의 나이와 학급 정보를 갖고 있는 클래스를 만든다고 가정하면.
+    - ```java
+         public class Test{
+        public static void main(String[] args){
+          Student a = new Student(17,2); // 17살 2반
+          Student b= new Student (18,1); // 18살 1반
+      
+      /*
+      어떻게 비교 ..? 
+      if (a >b) ... ? 
+      */
+        }
+      }
+      class Student {
+        int age;  //나이
+        int classNumber; //학급
+        
+      Student (int age, int classNumber){
+      this.age = age;
+      this.classNumber = classNumber;
+      }
+      }
+      ```
+    a학생과 b 학생 두 객체를 생성했다.
+    그럼 두 객체(a,b )를 어떻게 비교할 것인가? 부등호로 비교하려 하면, 나이(age)를 기준으로 비교되는 건가? 아니면 학급(classNumber)을 기준으로 비교되는 건가?<br><br>
+    이 부분이 포인트이다. 본질적으로 객체는 사용자가 기준을 정해주지 않는 이상 어떤 객체가 더 높은 우선순위를 갖는지 판단할 수가 없다.<br>
+    그래서 이러한 문제점을 해결하기 위해 바로 Comparabe 또는 Comparator가 쓰인다는 것이다.<bR><br>
+    왜 '객체'를 비교할 수 있도록 해준다는 것인지 개념이 잡힌다.<br><br>
+    그러면 Comparable과 Comparator 의 역할은 비슷한데 무슨 차이인가? <br>
+    왜 Comparable의 compareTo(T o) 메서드는 파라미터 (매개변수)가 한 개이고, Comparator의 compare(T o1, T o2)메서드는 파라미터가 두 개인가?<br><br><br>
+    일단, 두 인터페이스를 구체적으로 알아보기에 앞서 먼저 정답부터 말한다면,  
+    - Comparable 은 <b>"자기 자신과 매개변수 객체를 비교 "</b>
+      - 자기 자신과 파라미터로 들어오는 객체를 비교하는 것.
+    - Comparator는 <b>"두 매개변수 객체를 비교"</B> 
+      - 자기 자신의 상태가 어떻던 상관없이 파라미터로 들어오는 두 객체를 비교한는 것.<br><br>
+  - 본질 적으로 비교한다는 것 자체는 같지만, 비교 대상이 다르다.
+  - Comparable은 lang 패키지에 있기 때문에 import할 필요가 없지만, Comparator는 util 패키지에 있다.<br><br><br>
+- Comparable
+  - Comparable은 무엇이라고 했는가?  
+   "자기 자신과 매개변수 객체를 비교"한다고 했다.
+  - 일단, Comparable 인터페이스는 어떻게 정의되어 있는지 보자.
+  - ![img_1.png](img_1.png)<br>
+  interface Comparable<t> {...} 라고 되어있다. (만약 T가 무슨 말인지 모른다면 제너릭에 대한 이해가 없다는 것이다.)<bR>
+  쉽게 이야기 하자면, <T>는 하나의 객체 타입이 지정될 자리라고 생각하면 된다.
+  - ```java
+      public class ClassName implements Comparable<Type>{
+    /*
+    ...
+    Code
+    ...
+    */
+    // 필수 구현 부분
+    @Override
+    public int compareTo(type o){
+        /*
+         비교 구현
+        */
+    }
+      }
+    ```
+    이 때, 필수 구현 부분인 compareTo() 메서드가 바로 우리가 객체를 비교할 기준을 정의해주는 부분이다.<br>
+    쉽게 생각하면 이렇다. 여러분이 클래스를 만들 때, ClassName을 비교하고 싶을 것이다.  
+    아까 Comparable은 자기 자신과 매개변수 객체를 비교한다고 했다. 즉, 자기자신은 ClassName으로 생성한 객체 자신이 되고,
+    매개변수 객체는 ClassName.compareTo(o);를 통해 들어온 파라미터 o가 비교 할 객체가 되는 것이다.<br><br><br>
+  - 예로 Student클래스를 비교하고자 했으니 이를 위 방법에 맞게 적용하려면 어떻게 해야할까?
+    - 일단 Student 클래스에 Comprable을 implement해야한다. 그리고< > 사이에들어갈 타입은 무엇일까? <b>Stduent 객체와 또 다른 Stduent객체를 비교</b>하고 싶다면, < > 사이에 들어갈 타입 또한 Student가 되어야 하지 않을까?
+    <br> 즉 Type은 Student로 바뀌게 된다.
+    - ```java
+      class Student implements Comparable<Student>{
+      int age; // 나이
+      int classNumber; // 학급
+      
+      Student(int age, int classNumber){
+      this.age = age;
+      this.classNumber = classNumber;}
+      
+      @Override
+      public int compareTo (Student o){
+         /*
+         * 비교 구현
+         */
+         }
+      }
+      ```
+      <br><br>이제 compareTo 메서드를 구현해야 한다. 만약 나이를 기준으로 비교(대소 관계)를 하고자한다면 어떻게 해야할까?<br> 
+     자기 자신의 age(나이)와 매개변수로 들어온 o의 age(나이) 값을 비교하면 된다.<br><br><br>
+    - ```java
+      class Student implements Compareable<Student>{
+       int age; //나이
+       int classNumber; // 학급
+      
+      Student (int age, int classNumber){
+      this.age = age;
+      this.classNumber = classNumber;
+      } 
+      
+      @Override
+      public int compareTo(Student o){
+        //자기 자신의 age가 o의 age보다 크다면 양수
+         if(this.age > o.age){
+      return 1;         
+      }
+      //자기 자신의 age와 o의 age가 같다면 0
+      else if(this.age == o.age){
+      return 0;
+            }
+       //자기 자신의 age가 o의 age보다 작다면 음수
+       else{
+       return -1;
+      }
+      }}
+      ```
+      compareTo 메서드를 보면 int값을 반환하도록 되어있다. <br>
+      즉, 쉽게 말해 우리는 <b>'값'을 비교해서 정수를 반환</b>해야 한다는 것이다. 그럼 이러한 의문이 나올 것이다.
+      무슨 기준으로 양수, 0, 음수를 반환하는 것이냐고.  
+      우리는 "자기 자신"과 " 상대방"을 비교하는 것이다. 즉, 자기 자신을 기준으로 삼아 대소 관계를 파악해야 한다.<br>
+      만약 내가 갖고 있는 값이 7이라고 가정해보자, 그리고 상대방은 3이라고 가정한다면, 나 자신은 상대방보다 값이 4만큼 크다.
+      반대로 상대방이 9를 갖고 있다면, 나는 2만큼 작다, 즉 -2만큼 크다는 것이다.
+  - 
