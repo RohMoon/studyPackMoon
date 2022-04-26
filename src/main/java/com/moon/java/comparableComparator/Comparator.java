@@ -18,7 +18,7 @@ public class Comparator {
         }
         System.out.println();
 
-        Arrays.sort(arr.comp);
+        Arrays.sort(arr,comp);
         //정렬 이후
         System.out.print("정렬 후 :  ");
         for (int i = 0; i < 10; i++) {
@@ -30,7 +30,7 @@ public class Comparator {
     static java.util.Comparator<MyIntegerss> comp = new java.util.Comparator<MyIntegerss>() {
         @Override
         public int compare(MyIntegerss o1, MyIntegerss o2) {
-            return o2.value - 01.value;
+            return o2.value - o1.value;
         }
     };
 }
