@@ -94,3 +94,9 @@
   요소를 교환해가면서 올라간다. 위 과정을 흔히 위로 올라가면서 선별한다고 하여 sift-up(상향 선별) 이라고 한다.<br><br>
 - 즉 값을 추가할 때는 size +1 위치에 새로운 값을 추가하고 상향 선별 과정을 거쳐 '재배치'를 해준다고 생각하면 된다.<Br>
 이 때, 재배치 되는 노드를 위 <b style="color:pink"> 분홍색 노드</b>, 즉 타겟 노드(target)라고 생각하면 된다.
+
+- Add.
+  - ![heapAdd.png](heapadd.png)<br><br><br>
+- Remove
+  - ![remove.png](heapremove.png)<br><br><br>
+  - 

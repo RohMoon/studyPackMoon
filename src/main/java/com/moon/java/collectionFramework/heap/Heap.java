@@ -1,6 +1,8 @@
 package com.moon.java.collectionFramework.heap;
 
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.NoSuchElementException;
 
 public class Heap<E> {
     private final Comparator<? super E> comparator;
@@ -128,7 +130,7 @@ public class Heap<E> {
         if(comparator != null) {
             siftUpComparator(index, target,comparator);
         }else {
-//            siftUpComparable(index,target);
+            siftUpComparable(index,target);
         }
     }
 
@@ -158,7 +160,7 @@ public class Heap<E> {
 
     //삽입 할 객체의 Comparable 을 이용한 sift-up
     @SuppressWarnings("unchecked")
-    private void siftUpComparableint (int index , E target){
+    private void siftUpComparable (int index , E target){
         //타겟 노드가 비교 될 수 있도록 변수를 만든다.
         Comparable <? super E > comparable = (Comparable<? super E>) target;
 
@@ -173,5 +175,165 @@ public class Heap<E> {
             index = parent;
         }
         array[index] = comparable;
+    }
+
+    /*
+    * remove
+    * 삭제는 어떻게 해야할까?
+    * add 경우 맨 마지막 노드에 추가하고 비교하면서 자리를 찾아갔다.
+    * 이를 거꾸로 하면 삭제연산의 경우 root에 있는 노드를 삭제하고,
+    * 마지막에 위치해있던 노드를 root Node로 가져와 add와는 반대로 자식 노드가 재배치하려는 노드보다 크거나
+    * 자식노드가 없을 때 까지 자신의 위치를 찾아가면 된다.
+    *
+    * 마지막 노드를 root 노드로 가져온 뒤, 자식 노드와 비교하면서 자리를 찾아가면 된다. 즉 비교 대상이 되는 '분홍생 노드'는 타겟이 되는것이다.
+    * 이 타겟을 다른 노드와 비교하면서 타겟 노드가 배치 될 자리를 찾아가야 한다.
+    * 중요한 점은 왼쪽 자식 노드와 오른쪽 자식 노드 중 "값을 가진 노드"랑 재배치 할 노드와 비교해야한다.
+    *
+    * 그래야 최소 힙을 만족시킬 수 있다.  만약 반대로 된다면 첫 비교 교환 단계에서 35가 root 노드에 배치되어 버리는데 , 이는 왼쪽 자식 노드인 10보다 큰 값을 갖게 되면서 최소힙을 만족하지 못한다.
+    * 이렇게 아래로 내려가면서 재배치 하는 과정을 sift-down( 하향 선별) 이라고도 한다.
+    *
+    * 그리고 삽입 과정과 마찬가지로 Comparator를 쓰느냐, Comparale을 쓰느냐를 나누어서 만들어 본다.
+    * */
+
+    @SuppressWarnings("unchecked")
+    public E remove(){
+    if (array[1] == null){ // 만약 root가 비어있을 경우 예외를 던지도록 함.
+        throw new NoSuchElementException();
+    }
+
+    E result = (E) array[1]; //삭제된 요소를 반환하기 위한 임시 변수
+    E target = (E) array[size]; // 타겟이 될 요소
+    array[size ]= null; // 타겟 노드를 비운다.
+
+        //삭제할 노드의 인덱스와 이후 재배치 할 타겟 노드를 넘겨준다.
+        siftDown(1, target); //  루트 노드가 삭제되므로 1을 넘겨준다.
+
+        return result;
+    }
+    
+    /*
+    * @param index 삭제할 노드의 인덱스
+    * @param target 재배치 할 노드
+    * */
+
+    private void siftDown (int index, E target){
+        //comparator 가 존재할 경우 comparator를 인자로 넘겨준다.
+        if (comparator != null){
+            siftDownComparator(index,target,comparator);
+        }
+        else{
+            siftDownComparable(index, target);
+        }
+    }
+
+    // Comparator를 이용한 sift -down
+    @SuppressWarnings("unchecked")
+    private void siftDownComparator(int index, E target, Comparator<? super E> comparator){
+
+        array[index] = null; // 삭제 할 인덱스의 노드를 삭제
+        size--;
+        
+        int parent = index; // 삭제노드부터 시작할 부모를 가리키는 변수
+        int child; // 교환 될 자식을 가리키는 변수
+        
+        // 왼쪽 자식 노드의 인덱스가 요소의 개수보다 작을 때 까지 반복
+        while((child = getLeftChild(parent))<= size){
+            int right = getRightChild(parent);//오른쪽 자식 인덱스
+            Object childVal = array[child]; // 왼쪽 자식의 값 (교환될 값)
+            /*
+            * 오른쪽 자식 인덱스가 size가 넘지 안흥면서
+            * 왼쪽 자식이 오른쪽 자식보다 큰 경우
+            * 재배치 할 노드는 작은 자식과 비교해야하므로
+            * child와 childVal을 오른쪽 자식으로 바꿔준다.
+            * */
+            if (right <= size && comparator.compare((E) childVal, (E)array[right])>0){
+                child = right;
+                childVal = array[child];
+            }
+            // 재배치 할 노드가 자식 노드보다 작을 경우 반목문을 종료한다.
+            if(comparator.compare(target, (E) childVal )<=0){
+                break;
+            }
+            /*
+            * 현재 부모 인덱스에 자식 노드 값을 대체해주고
+            * 부모 인덱스를 자식 인덱스로 교체.
+            * */
+            array[parent] = childVal;
+            parent = child;
+        }
+        //최종적으로 재배치 되는 위치에 타겟이 된 값을 넣어준다.
+        array[parent] = target;
+        /*
+        * 용적의 사이즈가 최소 용적보다는 크면서 요소의 개수가 전체 용적의 1/4일 경우
+        * 용적을 반으로 줄임( 단, 최소 용적보단 커야함)
+        * */
+        if (array.length > defaultCapacity && size < array.length /4 ){
+            resize(Math.max(defaultCapacity, array.length/2));
+        }
+    }
+
+    //Comparable 을 이용한 sift-down
+    @SuppressWarnings("unchecked")
+    private void siftDownComparable(int index, E target){
+
+        Comparable<? super E> comparable = (Comparable<? super E>) target;
+
+        array[index] = null;
+        size --;
+
+        int parent = index;
+        int child;
+
+        while ((child = getLeftChild(parent)) <= size){
+            int right = getRightChild(parent);
+
+            Object childVal = array[child];
+
+            if (right <= size && ((Comparable<?super E>) childVal).compareTo((E)array[right]) > 0){
+                child = right;
+                childVal = array[child];
+            }
+
+            if (comparable.compareTo((E) childVal) <= 0){
+                break;
+            }
+            array[parent] = childVal;
+            parent = child;
+        }
+        array[parent] = comparable;
+
+        if(array.length > defaultCapacity && size < array.length / 4){
+            resize(Math.max(defaultCapacity, array.length/2));
+        }
+    } //삭제 과정 최대 힙 구현하려한다면 비교과정을 반대로 해주면 된다.
+    
+    /*
+    * size, peek, isEmpty, toArray 메서드 구현
+    * 현재 Heap에 저장 된 요소의 개수를 알고 싶을 때 size값을 리턴하기 위한 메서드로 size()를 하나 만들고,
+    * 또한 가장 우선순위가 높은 원소인 루트 노드의 값만 확인하고 싶을 때 쓰는 메서드를 위해 peek() 메서드를 만들 것이다.
+    * 데이터를 삭제하지 않고 확인만 하고 싶을 때 쓰는 것이 peek() 메서드다. 한마디로 remove() 메서드에서 삭제과정만 없는 것이 peek() 이다.
+    *
+    * 그리고 의외로 자주 쓰이는 현재 힙(Heap)에 요소가 아무 것도 없는 경우를 판별하기 위한 메서드도 하나 만들어주자.
+    * 이 때 힙에 아무 요소가 없다는 것은 size가 0이라는 소리이므로 size == 0 인지를 반환해주면 된다.
+    *
+    * 마지막으로 toArray로 현재 Heap의 배열에 요소가 어떻게 배치되어있는지 볼 수 있또록 아주 간단하게 구현해보자.
+    * */
+    public int size () {
+        return this.size;
+    }
+    @SuppressWarnings("unchecked")
+    public E peek(){
+        if (array[1] == null){
+            throw new NoSuchElementException();
+        }
+        return (E)array[1];
+    }
+
+    public boolean isEmpty() {
+        return size == 0 ;
+    }
+
+    public Object[] toArray() {
+        return Arrays.copyOf(array, size +1);
     }
 }
