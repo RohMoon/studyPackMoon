@@ -16,14 +16,14 @@ public class Room {
         int timeCount = 0;
 
         if (startTime > endTime) {
-            timeCount = timeTable.length() - (startTime - endTime) ;
+            timeCount = timeTable.length() - (startTime - endTime);
         }
         if (startTime < endTime) {
             timeCount = endTime - startTime;
         }
-        if (endTime == 0) {
-            timeCount = 1;
-        }
+//        if (startTime-endTime =1 || (timeTable.length() - (startTime - endTime))=1) {
+//            timeCount = 1;
+//        }
         return timeCount;
     }
 
@@ -35,18 +35,20 @@ public class Room {
             throw new IndexOutOfBoundsException();
         }
 
-        for (int i = 0, j = startTime; i < timeCount; i++,j++) {
+        for (int i = 0, j = startTime; i < timeCount; i++) {
+
 
             if (j >= timeTable.length()) {
                 j = 0;
             }
 
-            if (timeTable.get(j) != null ) {
-                result= -1;
+            if (timeTable.get(j) != null) {
+                result = -1;
                 break;
-            }else if (timeTable.get(j) == null ){
-                result=1;
+            } else if (timeTable.get(j) == null) {
+                result = 1;
             }
+            j++;
         } // end of for
         return result;
     }
@@ -57,18 +59,42 @@ public class Room {
         int emptyCheckResult = theseTimeEmptyCheck(timeCount, startTime);
 
         if (emptyCheckResult == 1) {
-            for (int i = 0, j = startTime; i < timeCount; i++,j++) {
-                if (i >= timeTable.length()){ j=0; }
+            for (int i = 0, j = startTime; i < timeCount; i++, j++) {
+
+                if (j >= timeTable.length()) {
+                    j = 0;
+                }
                 timeTable.add(j, customer);
             }
-        }else{
+        } else {
             System.out.println(" it including unavailable Time. ");
         }
     }
 
-    public void removeTime(int startTime, int endTime, String customer){
+    public void removeTime(int startTime, int endTime, String customer) {
 
+        int timeCount = getTimeCount(startTime, endTime);
+        int emptyCheckResult = theseTimeEmptyCheck(timeCount, startTime);
+
+        if (emptyCheckResult == -1) {
+            for (int i = 0, j = startTime; i < timeCount; i++, j++) {
+                if (i >= timeTable.length()) {
+                    j = 0;
+                }
+                if (timeTable.get(j).equals(customer)) {
+                    timeTable.remove(j);
+                }
+            }
+        }
     }
 
+    public void clear(){
+        for (int i = 0; i < timeTable.length(); i++) {
+            timeTable.remove(i);
+        }        
+    }
+    public int getSize(){
+        return timeTable.getSize();
+    }
 
 }

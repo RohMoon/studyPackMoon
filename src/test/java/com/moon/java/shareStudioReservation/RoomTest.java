@@ -71,7 +71,59 @@ class RoomTest {
 
     }
 
+    @Test
+    void removeTime() {
+        Room room = new Room(10,5000);
 
+        room.addTime(3,5,"dr.Strange");
 
+        assertEquals("dr.Strange",room.timeTable.get(3));
+        assertEquals("dr.Strange",room.timeTable.get(4));
 
+        room.removeTime(3,4,"dr.Strange");
+        assertEquals(null,room.timeTable.get(3));
+        assertEquals("dr.Strange",room.timeTable.get(4));
+
+        for (int i = 0; i < 24; i++) {
+            System.out.println(room.timeTable.get(i));
+        }
+    }
+
+    @Test
+    void clearTest() {
+        Room room = new Room(10,5000);
+
+        room.addTime(1,5,"dr.Strange");
+        room.addTime(5,8,"IronMan");
+        room.addTime(10,20,"SpiderMan");
+        room.addTime(20,1,"CaptainSungpo");
+
+        System.out.println("\n\n");
+        System.out.println("Get Size ==> " + room.timeTable.getSize());
+        System.out.println("\n\n");
+
+        for (int i = 0; i < 23; i++) {
+            System.out.println(room.timeTable.get(i));
+        }
+
+        assertTrue(room.timeTable.get(1)!=null);
+        assertTrue(room.timeTable.get(3)!=null);
+        assertTrue(room.timeTable.get(5)!=null);
+        assertTrue(room.timeTable.get(10)!=null);
+        assertTrue(room.timeTable.get(23)!=null);
+
+        room.clear();
+
+        assertFalse(room.timeTable.get(1)!=null);
+        assertFalse(room.timeTable.get(3)!=null);
+        assertFalse(room.timeTable.get(5)!=null);
+        assertFalse(room.timeTable.get(10)!=null);
+        assertFalse(room.timeTable.get(23)!=null);
+
+        System.out.println("---------------------");
+        for (int i = 0; i < 23; i++) {
+            System.out.println(room.timeTable.get(i));
+        }
+
+    }
 }

@@ -13,18 +13,28 @@ public class TimeTable {
         this.timeTable[index] = customoer;
     }
 
-    public void remove(int index, String customoer) {
+    public void remove(int index) {
 
-        if (this.timeTable[index] == customoer)
         this.timeTable[index] = null;
     }
 
     public int length() {
         return timeTable.length;
     }
+
     public String get(int index){
 
         return timeTable[index];
+    }
+
+    public int getSize(){
+        int size = 0 ;
+        for (int i = 0; i < timeTable.length; i++) {
+            if (timeTable[i]!=null){
+                size++;
+            }
+        }
+        return size;
     }
 
 }
