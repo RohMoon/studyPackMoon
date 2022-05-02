@@ -8,6 +8,7 @@ public class Studio {
     private Room head;
     private Room tail;
     private int size;
+    Studio next;
 
     public Studio(String local, String suburb) {
         this.local = local;
@@ -121,7 +122,7 @@ public class Studio {
         this.suburb = suburb;
     }
 
-    public String getName(int index){
+    public String getRoomName(int index){
         return search(index).name;
     }
 
