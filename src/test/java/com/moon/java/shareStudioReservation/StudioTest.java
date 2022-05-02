@@ -127,6 +127,7 @@ class StudioTest {
         studio.addRoom("port", 10, 5000);
         studio.addRoom("dock", 10, 7000);
 
-        assertEquals("port",studio.getName(1));
+        assertEquals("port",studio.getRoomName(1));
+
     }
 }
