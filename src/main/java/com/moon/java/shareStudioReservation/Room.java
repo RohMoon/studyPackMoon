@@ -1,15 +1,19 @@
 package com.moon.java.shareStudioReservation;
 
 public class Room {
+    String name;
     int maxCapacity;
     int standardPrice;
     TimeTable timeTable;
+    Room next;//
 
 
-    public Room(int maxCapacity, int standardPrice) {
+    public Room(String name, int maxCapacity, int standardPrice) {
+        this.name = name;
         this.maxCapacity = maxCapacity;
         this.standardPrice = standardPrice;
         timeTable = new TimeTable();
+        this.next = null;
     }
 
     private int getTimeCount(int startTime, int endTime) {
@@ -21,9 +25,7 @@ public class Room {
         if (startTime < endTime) {
             timeCount = endTime - startTime;
         }
-//        if (startTime-endTime =1 || (timeTable.length() - (startTime - endTime))=1) {
-//            timeCount = 1;
-//        }
+
         return timeCount;
     }
 
@@ -36,7 +38,6 @@ public class Room {
         }
 
         for (int i = 0, j = startTime; i < timeCount; i++) {
-
 
             if (j >= timeTable.length()) {
                 j = 0;
@@ -93,6 +94,8 @@ public class Room {
             timeTable.remove(i);
         }        
     }
+
+
     public int getSize(){
         return timeTable.getSize();
     }

@@ -9,7 +9,7 @@ class RoomTest {
     @Test
     void isMakingRoomObject(){ //룸 생성하면 룸이 생성되는가?
 
-        Room room = new Room(10,5000);
+        Room room = new Room("1번방",10,5000);
 
 
         for (int i = 0; i < room.timeTable.length(); i++) {
@@ -24,7 +24,7 @@ class RoomTest {
 
     @Test
     void getTimeCountTest() {// it is basically private Method
-        Room room = new Room(10,5000);
+        Room room = new Room("1번방", 10,5000);
 
         // startTime < endTime
 //        assertEquals(2,room.getTimeCount(3,5));
@@ -36,7 +36,7 @@ class RoomTest {
 
     @Test
     void theseTimeEmptyCheck() {
-        Room room = new Room(10,5000);
+        Room room = new Room("1번방",10,5000);
 
         room.addTime(4,0,"dr.ironMan");
 
@@ -49,7 +49,7 @@ class RoomTest {
 
     @Test
     void isRoomAddTest(){
-        Room room = new Room(10,5000);
+        Room room = new Room("1번방",10,5000);
         room.addTime(3,5,"dr.Strange");
 
 
@@ -73,7 +73,7 @@ class RoomTest {
 
     @Test
     void removeTime() {
-        Room room = new Room(10,5000);
+        Room room = new Room("1번방",10,5000);
 
         room.addTime(3,5,"dr.Strange");
 
@@ -91,7 +91,7 @@ class RoomTest {
 
     @Test
     void clearTest() {
-        Room room = new Room(10,5000);
+        Room room = new Room("1번방",10,5000);
 
         room.addTime(1,5,"dr.Strange");
         room.addTime(5,8,"IronMan");
