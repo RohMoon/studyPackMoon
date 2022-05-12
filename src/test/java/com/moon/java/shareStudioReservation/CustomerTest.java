@@ -36,6 +36,7 @@ class CustomerTest {
         customer.setHowManyPeople(5);
         customer.setPaymentMethod("naver");
 
+
         assertEquals("raichu",customer.name);
         assertEquals(01012341234,customer.phoneNumber);
         assertEquals(5,customer.howManyPeople);

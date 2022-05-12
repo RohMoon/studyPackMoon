@@ -46,6 +46,7 @@ class ReservationTest {
         Customer customer = new Customer("pika",01012341234,2,"naver");
         Reservation reservation = new Reservation(customer,studioList.get(0));
         reservation.reservedStudio.getRoom(0).addTime(1,3, customer.name);
+
         assertEquals("pika",reservation.booker.name);
         assertEquals(01012341234,reservation.booker.phoneNumber);
         assertEquals(2,reservation.booker.howManyPeople);
