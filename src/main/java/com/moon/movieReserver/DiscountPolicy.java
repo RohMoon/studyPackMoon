@@ -3,8 +3,9 @@ package com.moon.movieReserver;
 import com.moon.java.collectionFramework.arrayList.ArrayList;
 
 import java.util.Arrays;
+import java.util.List;
 
-public class DiscountPolicy {
+public abstract class DiscountPolicy {
     private List<DiscountCondition> conditions = new ArrayList<>();
 
     public DiscountPolicy(DiscountCondition ... conditions) {
